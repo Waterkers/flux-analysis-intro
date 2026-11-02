@@ -112,7 +112,7 @@ Die Schüler benutzen außerdem direkt die COBRA-Funktionen `changeRxnBounds`, `
 
 ## So funktioniert der Container
 
-* **Basis:** `quay.io/jupyter/minimal-notebook:2026-10-12` (Ubuntu 26.04, JupyterLab 4.6), dazu Octave 11 aus Ubuntu, `octave_kernel` und das deutsche JupyterLab-Sprachpaket.
+* **Basis:** `quay.io/jupyter/minimal-notebook:2026-10-12` (Ubuntu 26.04, JupyterLab 4.6), dazu Octave 11 aus Ubuntu, `octave_kernel` und das deutsche JupyterLab-Sprachpaket. Das Paket lässt einige Menüpunkte auf Englisch (z. B. im Menü *Ausführen*); `docker/jupyterlab-de-additions.json` ergänzt beim Build deutsche Übersetzungen dafür und korrigiert zwei Tippfehler. Weitere Menüpunkte lassen sich dort ergänzen.
 * **Solver:** GLPK, in Octave als `glpk()` eingebaut. Keine Lizenz nötig. Für das Modell mit 95 Reaktionen mehr als schnell genug.
 * **COBRA Toolbox v3.7.1** in `/opt/cobratoolbox`, schreibgeschützt. `initCobraToolbox` wird **nicht** benutzt: Unter Octave verlangt es Git-Submodule und ruft Funktionen auf, die es nur in MATLAB gibt. Stattdessen setzt `docker/cobra_startup.m` `src/` auf den Pfad und setzt die Solver-Variablen, die `initCobraToolbox` setzen würde. Das läuft über die systemweite `octaverc` automatisch in jeder Octave-Sitzung.
 * **Anpassungen für Octave:** `docker/patch_cobra.py` ändert beim Build sechs Zeilen der COBRA Toolbox. Sie betreffen:
