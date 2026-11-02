@@ -772,6 +772,7 @@ end
 plot(growth, ethanol, 'o-', 'linewidth', 2)
 xlabel('Growth rate (per hour)')
 ylabel('Maximum ethanol (mmol per gram per hour)')
+ylim([0 22])   % fixed axis, so every computer shows the same picture
 grid on""",
         """growth = linspace(0, 0.21, 15);                 % von keinem Wachstum bis zum Maximum ohne Sauerstoff
 ethanol = zeros(size(growth));
@@ -784,6 +785,7 @@ end
 plot(growth, ethanol, 'o-', 'linewidth', 2)
 xlabel('Wachstumsrate (pro Stunde)')
 ylabel('Maximales Ethanol (mmol pro Gramm pro Stunde)')
+ylim([0 22])   % feste Achse, damit jeder Computer dasselbe Bild zeigt
 grid on""",
     ),
     md(
