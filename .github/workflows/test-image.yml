@@ -1,0 +1,57 @@
+# Build the Docker image and test it on both processor types students use:
+#   amd64 - Windows PCs, Intel Macs, most Linux computers
+#   arm64 - Macs with Apple Silicon (M1, M2, ...)
+# Each runs natively on its own GitHub-hosted runner; no emulation.
+#
+# The build itself runs docker/smoke_test.m, so it fails if FBA gives wrong results.
+# After that, every solution notebook (English and German) is run in the image.
+
+name: Test image
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+  # Once a month, so a disappearing download (e.g. the legacy BiGG site) is noticed
+  # before a practical day, not on it.
+  schedule:
+    - cron: "0 6 1 * *"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test (${{ matrix.arch }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: amd64
+            runner: ubuntu-24.04
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: English and German notebooks run the same code
+        if: matrix.arch == 'amd64'
+        run: python3 tools/check_parity.py
+
+      - name: Build image (includes the FBA smoke test)
+        run: docker build --progress=plain -t fba-practical:test docker
+
+      - name: Run all solution notebooks
+        run: tools/run_solutions.sh fba-practical:test
+
+      - name: Keep the executed notebooks
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: solutions-${{ matrix.arch }}
+          path: teacher/solutions/
+          retention-days: 14
