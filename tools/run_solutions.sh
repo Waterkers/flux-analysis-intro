@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 # Run every solution notebook in the container, so teacher/solutions/ contains the
 # expected outputs. Fails if any cell gives an error.
+#   tools/run_solutions.sh            uses the image from docker-compose.yml / .env
+#   tools/run_solutions.sh IMAGE      uses the given image (as in CI)
 set -euo pipefail
 cd "$(dirname "$0")/.."
-image="$(docker compose config --images)"
+image="${1:-$(docker compose config --images)}"
 docker run --rm -u root -e NB_UID="$(id -u)" -e NB_GID="$(id -g)" \
     -v "$PWD/teacher:/home/jovyan/teacher" "$image" \
     bash -c 'cd teacher/solutions && status=0
