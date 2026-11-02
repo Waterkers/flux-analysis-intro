@@ -66,7 +66,13 @@ Geh dann die Notebooks selbst durch. Die Lösungen in `teacher/solutions/` zeige
 ## Während des Praktikums
 
 * **Windows:** Doppelklick auf `start_de.bat` (Deutsch) oder `start.bat` (English).
-* **Mac:** Doppelklick auf `start_de.command` oder `start.command`. Beim ersten Mal fragt macOS eventuell nach einer Erlaubnis: Rechtsklick → *Öffnen*.
+* **Mac:** Doppelklick auf `start_de.command` oder `start.command`. macOS blockiert jede dieser Dateien beim ersten Mal, weil sie aus dem Internet heruntergeladen wurden. Rechtsklick → *Öffnen* funktioniert in aktuellen macOS-Versionen **nicht**. Stattdessen:
+  1. Doppelklick auf die Datei. macOS meldet, dass sie nicht geöffnet werden kann; auf **Fertig** klicken.
+  2.  → **Systemeinstellungen → Datenschutz & Sicherheit** öffnen, nach unten zu *Sicherheit* scrollen und neben der Datei auf **Dennoch öffnen** klicken.
+  3. Mit dem Passwort des Macs (oder Touch ID) bestätigen und noch einmal auf **Dennoch öffnen** klicken.
+  4. Wenn gefragt wird, ob Terminal auf Dateien im Ordner *Downloads* zugreifen darf, auf **Erlauben** klicken.
+
+  Das ist einmal pro Datei nötig, also einmal für `start_de.command` und einmal für `start.command`. Auf Macs, die von der Schule verwaltet werden, muss das eventuell die IT erlauben. Probiere es vor dem Praktikumstag an einem Schüler-Mac aus.
 * **Linux:** `./start.sh de` oder `./start.sh`.
 
 Der Browser öffnet `http://localhost:8888` im Ordner der gewählten Sprache. Auch die Menüs von JupyterLab sind dann in dieser Sprache. Zum Beenden: `stop.bat` / `./stop.sh`. Die Arbeit der Schülerinnen und Schüler bleibt in `practical/` auf ihrem Rechner.

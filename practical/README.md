@@ -14,6 +14,13 @@ You need **Docker Desktop**, and it must be running (look for the whale icon).
 | Mac | `start.command` |
 | Linux | run `./start.sh` in a terminal |
 
+**Mac, the first time only:** macOS blocks `start.command` because it was downloaded from the internet. Right-click → *Open* doesn't help. Instead:
+
+1. Double-click `start.command`. macOS says it can't be opened; click **Done**.
+2. Open  → **System Settings → Privacy & Security**, scroll down and click **Open Anyway** next to `start.command`.
+3. Enter your Mac password (or use Touch ID), then click **Open Anyway** again.
+4. If Terminal asks for access to the *Downloads* folder, click **Allow**.
+
 After a few seconds your browser opens **JupyterLab** with the `en` folder. If it doesn't, open <http://localhost:8888> yourself.
 
 ## Working
