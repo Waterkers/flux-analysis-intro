@@ -1,0 +1,28 @@
+# FBA practical. Start with start.sh / start.command / start.bat rather than by hand.
+name: fba-practical
+
+services:
+  jupyter:
+    # Set FBA_IMAGE in .env (copy .env.example) to use an image from a registry; the default is the
+    # locally built / USB-loaded image (see README.md).
+    image: ${FBA_IMAGE:-fba-practical:1.0}
+    build: ./docker
+    # Started as root only so the image can give the notebook user the host's user ID
+    # (Linux); JupyterLab itself runs as the unprivileged user.
+    user: root
+    environment:
+      PRACTICAL_LANG: ${PRACTICAL_LANG:-en}
+      NB_UID: ${HOST_UID:-1000}
+      NB_GID: ${HOST_GID:-100}
+      CHOWN_HOME: "yes"
+    ports:
+      # localhost only: nobody else on the school network can reach it, so no token is needed.
+      - "127.0.0.1:8888:8888"
+    volumes:
+      - ./practical:/home/jovyan/practical
+    command:
+      - start-notebook.py
+      - --IdentityProvider.token=
+      - --ServerApp.password=
+      - --ServerApp.default_url=/lab/tree/practical/${PRACTICAL_LANG:-en}
+      - --LabApp.default_url=/lab/tree/practical/${PRACTICAL_LANG:-en}

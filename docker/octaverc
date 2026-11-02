@@ -1,0 +1,3 @@
+% Site-wide startup for the FBA practical: makes the COBRA Toolbox, GLPK and the
+% student helpers available in every Octave session and notebook.
+source('/opt/cobra-setup/cobra_startup.m');

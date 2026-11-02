@@ -1,0 +1,6 @@
+# Build output of tools/make_student_package.sh
+dist/
+# Jupyter autosave copies
+.ipynb_checkpoints/
+# Local settings; copy .env.example to .env to use one
+.env
