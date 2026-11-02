@@ -66,7 +66,13 @@ Then go through the notebooks yourself. The solutions in `teacher/solutions/` sh
 ## During the practical
 
 * **Windows:** double-click `start.bat` (English) or `start_de.bat` (Deutsch).
-* **Mac:** double-click `start.command` or `start_de.command`. The first time, macOS may ask for permission: right-click → *Open*.
+* **Mac:** double-click `start.command` or `start_de.command`. macOS blocks each of these files the first time, because they were downloaded from the internet. Right-click → *Open* does **not** work on current macOS versions. Instead:
+  1. Double-click the file. macOS says it can't be opened; click **Done**.
+  2. Open  → **System Settings → Privacy & Security**, scroll down to *Security*, and click **Open Anyway** next to the file.
+  3. Confirm with the Mac's password (or Touch ID), then click **Open Anyway** again.
+  4. When asked whether Terminal may access files in the *Downloads* folder, click **Allow**.
+
+  This is needed once per file, so once for `start.command` and once for `start_de.command`. On school-managed Macs, the IT department may have to allow it. Try it on one student Mac before the practical day.
 * **Linux:** `./start.sh` or `./start.sh de`.
 
 The browser opens at `http://localhost:8888` in the right language folder. JupyterLab's own menus are also in that language. To stop: `stop.bat` / `./stop.sh`. Students' work stays in `practical/` on their computer.
