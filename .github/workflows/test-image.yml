@@ -48,6 +48,20 @@ jobs:
       - name: Run all solution notebooks
         run: tools/run_solutions.sh fba-practical:test
 
+      # start.sh passes the host's user ID; on a Mac that is 501:20, not the image's
+      # 1000. JupyterLab must still start (it once failed with "Permission denied").
+      - name: JupyterLab starts with a Mac user ID
+        run: |
+          docker run -d --name mac-user -u root -e NB_UID=501 -e NB_GID=20 -p 127.0.0.1:8888:8888 \
+              fba-practical:test start-notebook.py --IdentityProvider.token=
+          for _ in $(seq 1 60); do
+            if curl -fs -o /dev/null http://localhost:8888/api; then break; fi
+            sleep 1
+          done
+          docker logs mac-user 2>&1 | tail -20
+          curl -fs -o /dev/null http://localhost:8888/api
+          ! docker logs mac-user 2>&1 | grep -q "Permission denied"
+
       - name: Keep the executed notebooks
         if: always()
         uses: actions/upload-artifact@v4

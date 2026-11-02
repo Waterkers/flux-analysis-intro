@@ -44,6 +44,7 @@ COPY cobra_startup.m smoke_test.m /opt/cobra-setup/
 COPY compat/ /opt/cobra-setup/compat/
 COPY helpers/ /opt/cobra-setup/helpers/
 COPY octaverc /usr/share/octave/site/m/startup/octaverc
+COPY fix-home-owner.sh /usr/local/bin/before-notebook.d/15-fix-home-owner.sh
 COPY jupyterlab-language.sh /usr/local/bin/before-notebook.d/20-jupyterlab-language.sh
 RUN chmod -R a+rX,go-w /opt/cobratoolbox /opt/cobra-setup /opt/models
 
