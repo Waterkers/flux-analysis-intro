@@ -4,7 +4,10 @@ function showFluxes(model, solution, n)
   if nargin < 3
     n = 15;
   end
-  [~, order] = sort(abs(solution.x), 'descend');
+  % Round before sorting: reactions with the same flux (e.g. GAPD and PGK) differ only
+  % in the last digits, which vary between processors. Rounded, they tie, and the sort
+  % keeps ties in model order, so every computer shows the same chart.
+  [~, order] = sort(round(abs(solution.x) * 1e6), 'descend');
   top = order(min(n, numel(order)):-1:1);
   barh(solution.x(top));
   set(gca, 'ytick', 1:numel(top), 'yticklabel', strrep(model.rxns(top), '_', '\_'));
