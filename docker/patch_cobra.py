@@ -35,6 +35,11 @@ PATCHES = [
     ("printGPRForRxns.m",
      "gprs = regexprep(gprs,'x\\(([0-9]+)\\)','${model.genes{str2num($1)}}');",
      "gprs = regexprepfun(gprs,'x\\(([0-9]+)\\)',@(t) model.genes{str2num(t{2})});"),
+    # A missing comma in a cell array that spans lines: MATLAB accepts it, Octave
+    # stops with a syntax error, so fluxVariability can't be called at all.
+    ("fluxVariability.m",
+     "@(x) isscalar(x) & (islogical(x) | isnumeric(x)) ...  % heuristics",
+     "@(x) isscalar(x) & (islogical(x) | isnumeric(x)), ...  % heuristics"),
 ]
 
 failed = False

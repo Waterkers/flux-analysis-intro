@@ -29,7 +29,7 @@ Open the notebooks in order:
 
 1. `00_welcome.ipynb`: how notebooks work
 2. `01_tutorial_fba.ipynb`: the bacterium in the computer
-3. `02_exercise_oxygen.ipynb`: life without oxygen
+3. `02_exercise_oxygen.ipynb`: life without oxygen, and how many ways there are to grow
 4. `03_exercise_food.ipynb`: what's on the menu?
 5. `04_exercise_knockouts.ipynb`: switching off genes
 6. `05_bonus_production.ipynb`: bacteria as factories (bonus)

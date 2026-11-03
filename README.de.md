@@ -105,6 +105,7 @@ Der Container bringt ein paar kleine Funktionen mit, damit die Notebooks kurz bl
 | `[growth, sol] = showGrowth(model)` | FBA; zeigt Wachstumsrate und Verdopplungszeit |
 | `showExchange(model, sol)` | was die Zellen aufnehmen und abgeben, mit Alltagsnamen |
 | `showFluxes(model, sol, n)` | Balkendiagramm der *n* größten Flüsse |
+| `showFluxRange(model, percent, reactions)` | Flussvariabilitätsanalyse: kleinster und größter Fluss jeder Reaktion, solange das Wachstum mindestens `percent` % des Maximums erreicht; Tabelle und Diagramm |
 | `model = knockOut(model, 'eno')` | schaltet ein Gen aus, über Namen oder ID |
 | `genes = findEssentialGenes(model)` | Einzel-Gen-Deletion: die Gene, ohne die die Zellen nicht wachsen |
 
@@ -115,14 +116,15 @@ Die Schüler benutzen außerdem direkt die COBRA-Funktionen `changeRxnBounds`, `
 * **Basis:** `quay.io/jupyter/minimal-notebook:2026-10-12` (Ubuntu 26.04, JupyterLab 4.6), dazu Octave 11 aus Ubuntu, `octave_kernel` und das deutsche JupyterLab-Sprachpaket. Das Paket lässt einige Menüpunkte auf Englisch (z. B. im Menü *Ausführen*); `docker/jupyterlab-de-additions.json` ergänzt beim Build deutsche Übersetzungen dafür und korrigiert zwei Tippfehler. Weitere Menüpunkte lassen sich dort ergänzen.
 * **Solver:** GLPK, in Octave als `glpk()` eingebaut. Keine Lizenz nötig. Für das Modell mit 95 Reaktionen mehr als schnell genug.
 * **COBRA Toolbox v3.7.1** in `/opt/cobratoolbox`, schreibgeschützt. `initCobraToolbox` wird **nicht** benutzt: Unter Octave verlangt es Git-Submodule und ruft Funktionen auf, die es nur in MATLAB gibt. Stattdessen setzt `docker/cobra_startup.m` `src/` auf den Pfad und setzt die Solver-Variablen, die `initCobraToolbox` setzen würde. Das läuft über die systemweite `octaverc` automatisch in jeder Octave-Sitzung.
-* **Anpassungen für Octave:** `docker/patch_cobra.py` ändert beim Build sechs Zeilen der COBRA Toolbox. Sie betreffen:
+* **Anpassungen für Octave:** `docker/patch_cobra.py` ändert beim Build sieben Zeilen der COBRA Toolbox. Sie betreffen:
   * mit NUL aufgefüllten Text in `descFileRead`
   * das Auslesen des GLPK-Status aus Octaves `glpk()`
   * `regexprep` mit `${…}`-Ausdrücken, die Octave nicht kennt (vier Stellen)
+  * ein fehlendes Komma in `fluxVariability`, das Octave als Syntaxfehler ablehnt
 
   `docker/compat/` ergänzt `contains()` und die Hilfsfunktion `regexprepfun()`, die diese Anpassungen benutzen. Der Build schlägt fehl, wenn eine angepasste Zeile in einer neueren COBRA-Version woanders steht.
 * **Modell:** `e_coli_core.mat` und `e_coli_core.json` aus BiGG, geprüft gegen feste SHA-256-Prüfsummen. Die JSON-Datei liefert nur die Gennamen.
-* **Unter Octave nicht getestet:** COBRA-Funktionen, die die Notebooks nicht benutzen. `fluxVariability` und `surfNet` funktionieren bekanntermaßen nicht.
+* **Unter Octave nicht getestet:** COBRA-Funktionen, die die Notebooks nicht benutzen. `surfNet` funktioniert bekanntermaßen nicht.
 
 ## Wenn etwas nicht klappt
 
@@ -158,6 +160,6 @@ Dieses Repository verwendet zwei Lizenzen:
 | Notebooks (`practical/`, `teacher/`), die Notebook-Texte in `tools/build_notebooks.py` und die Dokumentation (README-Dateien, `THIRD_PARTY_NOTICES.md`) | [CC BY 4.0](LICENSE-CC-BY-4.0.txt) |
 | Alles andere: Code, Skripte, Docker- und Octave-Dateien | [MIT](LICENSE) |
 
-Ausnahmen: `docker/LICENSE-BiGG.txt` ist der Lizenztext von BiGG, und `docker/patch_cobra.py` zitiert die sechs Zeilen der COBRA Toolbox, die es ändert (COBRA Toolbox: GPL-3.0). Software und Daten Dritter, die das Image nutzt, behalten ihre eigenen Lizenzen, siehe [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Ausnahmen: `docker/LICENSE-BiGG.txt` ist der Lizenztext von BiGG, und `docker/patch_cobra.py` zitiert die sieben Zeilen der COBRA Toolbox, die es ändert (COBRA Toolbox: GPL-3.0). Software und Daten Dritter, die das Image nutzt, behalten ihre eigenen Lizenzen, siehe [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 Du darfst die Notebooks gern für deinen eigenen Unterricht übersetzen, kürzen oder anpassen. Nach CC BY 4.0 nenne bitte die Quelle, zum Beispiel so: *„Nach dem FBA-Praktikum der fba-practical contributors, CC BY 4.0“*, mit einem Link zu diesem Repository.

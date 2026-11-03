@@ -29,7 +29,7 @@ Nach ein paar Sekunden öffnet sich dein Browser mit **JupyterLab** und dem Ordn
 
 1. `00_welcome.ipynb`: So funktionieren Notebooks
 2. `01_tutorial_fba.ipynb`: Ein Bakterium im Computer
-3. `02_exercise_oxygen.ipynb`: Leben ohne Sauerstoff
+3. `02_exercise_oxygen.ipynb`: Leben ohne Sauerstoff, und wie viele Wege es zum Wachsen gibt
 4. `03_exercise_food.ipynb`: Was steht auf dem Speiseplan?
 5. `04_exercise_knockouts.ipynb`: Gene ausschalten
 6. `05_bonus_production.ipynb`: Bakterien als Fabriken (Bonus)

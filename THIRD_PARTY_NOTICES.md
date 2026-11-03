@@ -5,7 +5,7 @@ This repository's own files are licensed under MIT and CC BY 4.0, see the Licens
 | Component | Version | Source | License |
 |---|---|---|---|
 | *E. coli* core model (`e_coli_core`) | BiGG, 2019 | <http://bigg.ucsd.edu/models/e_coli_core> | BiGG Models license: free for educational, research and non-profit use; **commercial use requires permission from UC San Diego**. The full text ships with the model in the image as `/opt/models/LICENSE-BiGG.txt` (source: [`docker/LICENSE-BiGG.txt`](docker/LICENSE-BiGG.txt)). |
-| COBRA Toolbox | v3.7.1 | <https://github.com/opencobra/cobratoolbox> | GPL-3.0. Six lines are changed at build time to work under Octave, see [`docker/patch_cobra.py`](docker/patch_cobra.py). |
+| COBRA Toolbox | v3.7.1 | <https://github.com/opencobra/cobratoolbox> | GPL-3.0. Seven lines are changed at build time to work under Octave, see [`docker/patch_cobra.py`](docker/patch_cobra.py). |
 | GNU Octave | 11.1 (Ubuntu package) | <https://octave.org> | GPL-3.0-or-later |
 | GLPK (GNU Linear Programming Kit) | Ubuntu package, built into Octave | <https://www.gnu.org/software/glpk/> | GPL-3.0-or-later |
 | gnuplot | Ubuntu package | <http://gnuplot.info> | gnuplot license (free software) |

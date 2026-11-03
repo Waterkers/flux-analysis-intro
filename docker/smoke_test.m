@@ -32,6 +32,16 @@ check(growth < 1e-6, 'eno knockout cannot grow');
 growth = showGrowth(knockOut(model, 'b1723'));
 check(abs(growth - 0.8739) < 1e-3, 'pfkB knockout grows normally (pfkA takes over)');
 
+[minFlux, maxFlux] = fluxVariability(model, 100, 'max', {'PFK', 'EX_ac_e', 'SUCDi'});
+check(abs(minFlux(1) - 7.477) < 1e-2 && abs(maxFlux(1) - 7.477) < 1e-2, ...
+      sprintf('flux variability: PFK fixed at %.3f ~ 7.477 at maximum growth', minFlux(1)));
+check(maxFlux(2) < 1e-3 && maxFlux(3) > 999, ...
+      'flux variability: no acetate at maximum growth, SUCDi unbounded (FRD7 loop)');
+[minFlux, maxFlux] = fluxVariability(model, 90, 'max', {'EX_ac_e'});
+check(abs(maxFlux - 3.814) < 1e-2, sprintf('flux variability at 90%%: acetate up to %.3f ~ 3.814', maxFlux));
+out = evalc('showFluxRange(model, 90, {''EX_ac_e''});');
+check(~isempty(strfind(out, '3.81')), 'showFluxRange prints acetate up to 3.81 at 90%');
+
 essential = findEssentialGenes(model);
 check(isequal(sort(essential(:))', sort({'gltA', 'eno', 'ptsI', 'ptsH', 'gapA', 'icd', 'pgk'})), ...
       sprintf('essential genes on glucose: %s', strjoin(essential(:)', ', ')));

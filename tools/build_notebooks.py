@@ -428,6 +428,65 @@ grid on""",
         "Das Wachstum steigt mit dem Sauerstoff gleichmäßig an und wird bei etwa **22** Einheiten flach. Ab dann ist die Glukose die Grenze: Die Zelle verbrennt schon alle 10 Einheiten Zucker, die sie aufnehmen kann, und für mehr Sauerstoff gibt es nichts mehr zu verbrennen.",
     ),
     md(
+        """## One best way, or many good ones?
+FBA gives you **one** set of fluxes for the fastest possible growth. But is that the only way the cell can do it? **Flux variability analysis (FVA)** checks every reaction: what is the **smallest** and the **largest** flux it can have while the cells still grow as fast as before?
+
+`showFluxRange(model, percent, reactions)` does this for a few reactions. `percent` is how fast the cells must still grow: 100 means at full speed. A **negative** flux means the reaction runs backwards. For exchange reactions (`EX_…`) it means the substance is taken up instead of released.""",
+        """## Ein bester Weg oder viele gute?
+FBA liefert dir **einen** Satz von Flüssen für das schnellstmögliche Wachstum. Aber ist das der einzige Weg, den die Zelle gehen kann? Die **Flussvariabilitätsanalyse (FVA)** prüft jede Reaktion: Was ist der **kleinste** und der **größte** Fluss, den sie haben kann, während die Zellen noch genauso schnell wachsen wie vorher?
+
+`showFluxRange(model, percent, reactions)` macht das für ein paar Reaktionen. `percent` gibt an, wie schnell die Zellen noch wachsen müssen: 100 heißt mit voller Geschwindigkeit. Ein **negativer** Fluss heißt, dass die Reaktion rückwärts läuft. Bei Austauschreaktionen (`EX_…`) heißt es, dass der Stoff aufgenommen statt abgegeben wird.""",
+    ),
+    code(
+        """reactions = {'PGI', 'G6PDH2r', 'EX_o2_e', 'EX_ac_e', 'EX_etoh_e', 'EX_for_e'};
+showFluxRange(model_air, 100, reactions);""",
+        """reactions = {'PGI', 'G6PDH2r', 'EX_o2_e', 'EX_ac_e', 'EX_etoh_e', 'EX_for_e'};
+showFluxRange(model_air, 100, reactions);""",
+    ),
+    md(
+        """**Question 4:** Compare the smallest and the largest flux of each reaction. What does that tell you about how the cell grows at full speed?""",
+        """**Frage 4:** Vergleiche den kleinsten und den größten Fluss jeder Reaktion. Was sagt dir das darüber, wie die Zelle mit voller Geschwindigkeit wächst?""",
+    ),
+    answer(
+        "They are the same for every reaction: each flux is **fixed**. At full speed there is only **one** way to grow, so the cell has no choices at all.",
+        "Bei jeder Reaktion sind sie gleich: Jeder Fluss ist **festgelegt**. Bei voller Geschwindigkeit gibt es nur **einen** Weg zu wachsen, die Zelle hat also gar keine Wahl.",
+    ),
+    md(
+        """Now let the cells grow a little slower: at least **90 %** of full speed. Replace `___` with the right number.""",
+        """Jetzt lass die Zellen etwas langsamer wachsen: mit mindestens **90 %** der vollen Geschwindigkeit. Ersetze `___` durch die richtige Zahl.""",
+    ),
+    exercise(
+        (
+            "showFluxRange(model_air, ___, reactions);",
+            "showFluxRange(model_air, ___, reactions);",
+        ),
+        (
+            "showFluxRange(model_air, 90, reactions);",
+            "showFluxRange(model_air, 90, reactions);",
+        ),
+    ),
+    md(
+        """**Question 5:** What changed? Which substances *could* the cells now release, even though they have plenty of oxygen?""",
+        """**Frage 5:** Was hat sich geändert? Welche Stoffe *könnten* die Zellen jetzt abgeben, obwohl sie genug Sauerstoff haben?""",
+    ),
+    answer(
+        "Every reaction now has a **range**: giving up just 10 % of growth opens up many different routes. PGI can even run backwards. The cells could release **acetate** (up to 3.8), **ethanol** (up to 2.2) and **formate** (up to 11.3), and use less oxygen. Real *E. coli* does exactly this: when it grows fast on glucose, it releases acetate even with oxygen around (*overflow metabolism*). FBA alone, which only looks at the single fastest way, misses this.",
+        "Jede Reaktion hat jetzt einen **Bereich**: Wenn die Zellen nur 10 % ihres Wachstums aufgeben, öffnen sich viele verschiedene Wege. PGI kann sogar rückwärts laufen. Die Zellen könnten **Acetat** (bis 3,8), **Ethanol** (bis 2,2) und **Formiat** (bis 11,3) abgeben und weniger Sauerstoff verbrauchen. Echte *E. coli* machen genau das: Wenn sie schnell auf Glukose wachsen, geben sie auch mit Sauerstoff Acetat ab (*Überflussstoffwechsel*). FBA allein, das nur den einen schnellsten Weg betrachtet, übersieht das.",
+    ),
+    md(
+        """Now do the same without oxygen.""",
+        """Jetzt das Gleiche ohne Sauerstoff.""",
+    ),
+    code("showFluxRange(model_no_air, 90, reactions);"),
+    md(
+        """**Question 6:** Look at the **smallest** flux of acetate, ethanol and formate. What does it tell you about life without oxygen?""",
+        """**Frage 6:** Schau dir den **kleinsten** Fluss von Acetat, Ethanol und Formiat an. Was sagt er dir über das Leben ohne Sauerstoff?""",
+    ),
+    answer(
+        "Without oxygen the smallest values are **above 0**: the cells **must** release all three, whichever route they take. Fermentation isn't one option among many, it is the only way to grow without oxygen.",
+        "Ohne Sauerstoff sind die kleinsten Werte **größer als 0**: Die Zellen **müssen** alle drei abgeben, egal welchen Weg sie nehmen. Gärung ist nicht eine Möglichkeit unter vielen, sondern der einzige Weg, ohne Sauerstoff zu wachsen.",
+    ),
+    md(
         """**Done!** Continue with `03_exercise_food.ipynb`.""",
         """**Fertig!** Weiter geht es mit `03_exercise_food.ipynb`.""",
     ),
