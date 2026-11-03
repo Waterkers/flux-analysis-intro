@@ -44,7 +44,7 @@ Double-click `stop.bat` (Windows) or run `./stop.sh` (Mac/Linux). Your notebooks
 
 * **"Docker is not running"**: start Docker Desktop, wait until it says it's running, try again.
 * **A cell shows an error**: check that you ran the cells above it, from the top.
-* **Start a notebook again from scratch**: menu *Kernel → Restart Kernel and Clear…*, then run the cells again.
+* **Start a notebook again from scratch**: menu *Kernel → Restart Kernel and Clear Outputs of All Cells…*, then run the cells again.
 * Still stuck? Ask your teacher.
 
 ## Credits

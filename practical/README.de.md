@@ -44,7 +44,7 @@ Doppelklicke auf `stop.bat` (Windows) oder führe `./stop.sh` aus (Mac/Linux). D
 
 * **„Docker läuft nicht“**: Starte Docker Desktop, warte, bis es läuft, und versuche es noch einmal.
 * **Eine Zelle zeigt einen Fehler**: Prüfe, ob du die Zellen darüber ausgeführt hast, von oben angefangen.
-* **Ein Notebook ganz von vorn beginnen**: Menü *Kernel → Kernel neu starten und leeren…*, dann die Zellen noch einmal ausführen.
+* **Ein Notebook ganz von vorn beginnen**: Menü *Kernel → Kernel neu starten und Ausgaben aller Zellen löschen…*, dann die Zellen noch einmal ausführen.
 * Kommst du nicht weiter? Frag deine Lehrkraft.
 
 ## Quellen

@@ -19,6 +19,9 @@ RUN apt-get update \
 # Jupyter: Octave kernel and the German JupyterLab interface.
 RUN pip install --no-cache-dir octave_kernel==1.1.1 jupyterlab-language-pack-de-DE==4.5.post3 \
  && fix-permissions "${CONDA_DIR}"
+# The German pack leaves some menu items in English; add our translations.
+COPY add_translations.py jupyterlab-de-additions.json /opt/cobra-setup/
+RUN python3 -I /opt/cobra-setup/add_translations.py /opt/cobra-setup/jupyterlab-de-additions.json
 
 # COBRA Toolbox, pinned. Submodules are not needed for LP-based FBA with GLPK.
 COPY patch_cobra.py /opt/cobra-setup/patch_cobra.py
