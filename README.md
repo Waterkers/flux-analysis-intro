@@ -105,6 +105,7 @@ The container adds a few small functions to keep the notebooks short. They are t
 | `[growth, sol] = showGrowth(model)` | FBA; prints the growth rate and doubling time |
 | `showExchange(model, sol)` | what the cells take up and release, with everyday names |
 | `showFluxes(model, sol, n)` | bar chart of the *n* largest fluxes |
+| `showFluxRange(model, percent, reactions)` | flux variability analysis: smallest and largest flux of each reaction while growth stays at least `percent` % of the maximum; table and chart |
 | `model = knockOut(model, 'eno')` | switch off a gene, by name or ID |
 | `genes = findEssentialGenes(model)` | single-gene deletion: the genes the cells can't grow without |
 
@@ -115,14 +116,15 @@ Students also use the COBRA functions `changeRxnBounds`, `changeObjective`, `opt
 * **Base:** `quay.io/jupyter/minimal-notebook:2026-10-12` (Ubuntu 26.04, JupyterLab 4.6), with Octave 11 from Ubuntu, `octave_kernel` and the German JupyterLab language pack. The pack leaves some menu items in English (e.g. in the *Run* menu); `docker/jupyterlab-de-additions.json` adds German translations for them at build time, and corrects two typos. To translate more items, add them there.
 * **Solver:** GLPK, built into Octave as `glpk()`. No licence needed. It is plenty fast for the 95-reaction model.
 * **COBRA Toolbox v3.7.1**, in `/opt/cobratoolbox`, read-only. `initCobraToolbox` is **not** used: under Octave it insists on git submodules and calls MATLAB-only functions. Instead, `docker/cobra_startup.m` puts `src/` on the path and sets the solver variables `initCobraToolbox` would set. It runs automatically in every Octave session through the site-wide `octaverc`.
-* **Octave fixes:** `docker/patch_cobra.py` changes six lines of COBRA at build time. These cover:
+* **Octave fixes:** `docker/patch_cobra.py` changes seven lines of COBRA at build time. These cover:
   * NUL-padded text in `descFileRead`
   * reading GLPK's status from Octave's `glpk()`
   * `regexprep` with `${…}` expressions, which Octave doesn't support (four places)
+  * a missing comma in `fluxVariability` that Octave rejects as a syntax error
 
   `docker/compat/` adds `contains()` and the `regexprepfun()` helper used by those fixes. The build fails if a patched line has moved in a newer COBRA version.
 * **Model:** `e_coli_core.mat` and `e_coli_core.json` from BiGG, checked against fixed SHA-256 checksums. The JSON file only supplies gene names.
-* **Not tested under Octave:** COBRA functions beyond those used in the notebooks. `fluxVariability` and `surfNet` are known not to work.
+* **Not tested under Octave:** COBRA functions beyond those used in the notebooks. `surfNet` is known not to work.
 
 ## Troubleshooting
 
@@ -158,6 +160,6 @@ This repository uses two licenses:
 | Notebooks (`practical/`, `teacher/`), the notebook texts in `tools/build_notebooks.py`, and the documentation (README files, `THIRD_PARTY_NOTICES.md`) | [CC BY 4.0](LICENSE-CC-BY-4.0.txt) |
 | Everything else: code, scripts, Docker and Octave files | [MIT](LICENSE) |
 
-Exceptions: `docker/LICENSE-BiGG.txt` is BiGG's license text, and `docker/patch_cobra.py` quotes the six COBRA Toolbox lines it changes (COBRA Toolbox: GPL-3.0). Third-party software and data used by the image keep their own licenses, see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Exceptions: `docker/LICENSE-BiGG.txt` is BiGG's license text, and `docker/patch_cobra.py` quotes the seven COBRA Toolbox lines it changes (COBRA Toolbox: GPL-3.0). Third-party software and data used by the image keep their own licenses, see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 You're welcome to translate, shorten or adapt the notebooks for your own classes. Under CC BY 4.0, please credit them like this: *"Based on the FBA practical by the fba-practical contributors, CC BY 4.0"*, with a link to this repository.
